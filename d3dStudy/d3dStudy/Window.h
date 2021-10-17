@@ -20,7 +20,7 @@
 #pragma once
 #include "ChiliWin.h"
 #include"ChiliException.h"
-
+#include "Keyboard.h"
 class Window
 {
 public:
@@ -64,6 +64,9 @@ private:
 	int width;
 	int height;
 	HWND hWnd;
+
+public:
+    Keyboard kbd;
 };
 // error exception helper macro
 #define CHWND_EXCEPT( hr ) Window::Exception( __LINE__,__FILE__,hr )

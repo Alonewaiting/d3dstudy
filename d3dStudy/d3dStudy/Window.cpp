@@ -132,12 +132,35 @@ LRESULT Window::HandleMsg( HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam ) noex
 {
     static WindowsMessageMap mm;
     OutputDebugString(mm(msg, lParam, wParam).c_str());
-	switch( msg )
-	{
-	case WM_CLOSE:
-		PostQuitMessage( 0 );
-		return 0;
-	}
+    switch (msg) {
+        // we don't want the DefProc to handle this message because
+        // we want our destructor to destroy the window, so return 0 instead of break
+    case WM_CLOSE:
+        PostQuitMessage(0);
+        return 0;
+        // clear keystate when window loses focus to prevent input getting "stuck"
+    case WM_KILLFOCUS:
+        kbd.ClearState();
+        break;
+
+        /*********** KEYBOARD MESSAGES ***********/
+    case WM_KEYDOWN:
+        // syskey commands need to be handled to track ALT key (VK_MENU) and F10
+    case WM_SYSKEYDOWN:
+        if (!(lParam & 0x40000000) || kbd.AutorepeatIsEnabled()) // filter autorepeat
+        {
+            kbd.OnKeyPressed(static_cast<unsigned char>(wParam));
+        }
+        break;
+    case WM_KEYUP:
+    case WM_SYSKEYUP:
+        kbd.OnKeyReleased(static_cast<unsigned char>(wParam));
+        break;
+    case WM_CHAR:
+        kbd.OnChar(static_cast<unsigned char>(wParam));
+        break;
+        /*********** END KEYBOARD MESSAGES ***********/
+    }
 
 	return DefWindowProc( hWnd,msg,wParam,lParam );
 }
