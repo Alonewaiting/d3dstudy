@@ -27,7 +27,7 @@ DxgiInfoManager::DxgiInfoManager() {
     }
 
     HRESULT hr;
-    GFX_THROW_NOINFO(DxgiGetDebugInterface(__uuidof(IDXGIInfoQueue), &pDxgiInfoQueue));
+   GFX_THROW_NOINFO( DxgiGetDebugInterface( __uuidof(IDXGIInfoQueue),&pDxgiInfoQueue ) );
 }
 
 void DxgiInfoManager::Set() noexcept {

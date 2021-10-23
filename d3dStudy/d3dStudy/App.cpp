@@ -23,5 +23,6 @@ void App::DoFrame() {
     const float g = abs(cos(timer.Peek()));
     const float b = abs(sin(timer.Peek()));
     wnd.Gfx().ClearBuffer(r, g, b);
+    wnd.Gfx().DrawTestTriangle();
     wnd.Gfx().EndFrame();
 }
