@@ -1,7 +1,7 @@
 #include "App.h"
 #include <sstream>
 #include <iomanip>
-
+#include<cmath>
 App::App()
     :
     wnd(800, 600, "The Donkey Fart Box") {
@@ -19,8 +19,9 @@ int App::Go() {
 }
 
 void App::DoFrame() {
-    const float t = timer.Peek();
-    std::ostringstream oss;
-    oss << "Time elapsed: " << std::setprecision(1) << std::fixed << t << "s";
-    wnd.SetTitle(oss.str());
+    const float r = abs(sin(timer.Peek()));
+    const float g = abs(cos(timer.Peek()));
+    const float b = abs(sin(timer.Peek()));
+    wnd.Gfx().ClearBuffer(r, g, b);
+    wnd.Gfx().EndFrame();
 }
