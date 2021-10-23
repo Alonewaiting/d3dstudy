@@ -3,6 +3,10 @@
 #include <sstream>
 
 #pragma comment(lib,"d3d11.lib")
+
+namespace wrl = Microsoft::WRL;
+
+
 #define GFX_THROW_FAILED(hrcall) if( FAILED( hr = (hrcall) ) ) throw Graphics::HrException( __LINE__,__FILE__,hr )
 // graphics exception checking/throwing macros (some with dxgi infos)
 #define GFX_EXCEPT_NOINFO(hr) Graphics::HrException( __LINE__,__FILE__,(hr) )
@@ -58,26 +62,10 @@ Graphics::Graphics(HWND hWnd) {
         &pContext
     ));
 
-    ID3D11Resource* pBackBuffer = nullptr;
-    GFX_THROW_INFO(pSwap->GetBuffer(1,__uuidof(ID3D11Resource),reinterpret_cast<void**>(&pBackBuffer)));
+    wrl::ComPtr<ID3D11Resource >pBackBuffer = nullptr;
+    GFX_THROW_INFO(pSwap->GetBuffer(0,__uuidof(ID3D11Resource),&pBackBuffer));
     if (pBackBuffer) {
-        GFX_THROW_INFO( pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pTarget) );
-    }
-    pBackBuffer->Release();
-}
-
-Graphics::~Graphics() {
-    if (pContext != nullptr) {
-        pContext->Release();
-    }
-    if (pSwap != nullptr) {
-        pSwap->Release();
-    }
-    if (pDevice != nullptr) {
-        pDevice->Release();
-    }
-    if (pTarget) {
-        pTarget->Release();
+        GFX_THROW_INFO( pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, pTarget.ReleaseAndGetAddressOf()) );
     }
 }
 
@@ -99,7 +87,7 @@ void Graphics::EndFrame() {
 void Graphics::ClearBuffer(float red, float green, float blue) noexcept {
     const float color[] = { red,green,blue,1.0f };
     if (pContext && pTarget) {
-        pContext->ClearRenderTargetView(pTarget, color);
+        pContext->ClearRenderTargetView(pTarget.Get(), color);
     }
 }
 
