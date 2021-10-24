@@ -19,10 +19,21 @@ int App::Go() {
 }
 
 void App::DoFrame() {
-    const float r = abs(sin(timer.Peek()));
+    while (const auto e = wnd.mouse.Read()) {
+        switch (e->GetType()) {
+        case Mouse::Event::Type::Move:
+        {
+            std::ostringstream oss;
+            oss << "Mouse moved to: (" << e->GetPosX() << "," << e->GetPosY() << ")\n";
+            wnd.SetTitle(oss.str());
+            break;
+        }
+        }
+    }
+    /*const float r = abs(sin(timer.Peek()));
     const float g = abs(cos(timer.Peek()));
     const float b = abs(sin(timer.Peek()));
-    wnd.Gfx().ClearBuffer(r, g, b);
+    wnd.Gfx().ClearBuffer(r, g, b);*/
     wnd.Gfx().DrawTestTriangle();
     wnd.Gfx().EndFrame();
 }

@@ -20,7 +20,7 @@
  ******************************************************************************************/
 #pragma once
 #include <queue>
-
+#include<optional>
 class Mouse {
     friend class Window;
 public:
@@ -93,7 +93,7 @@ public:
     bool LeftIsPressed() const noexcept;
     bool RightIsPressed() const noexcept;
     bool IsInWindow() const noexcept;
-    Mouse::Event Read() noexcept;
+    std::optional<Mouse::Event> Read() noexcept;
     bool IsEmpty() const noexcept {
         return buffer.empty();
     }
