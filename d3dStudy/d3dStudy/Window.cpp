@@ -22,7 +22,7 @@
 #include "resource.h"
 #include<ostream>
 #include<sstream>
-
+#include"WindowsThrowMacros.h"
 // Window Class Stuff
 Window::WindowClass Window::WindowClass::wndClass;
 

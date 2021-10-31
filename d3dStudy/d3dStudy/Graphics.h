@@ -2,10 +2,12 @@
 #include "ChiliWin.h"
 #include "ChiliException.h"
 #include "DxgiInfoManager.h"
+#include "Bindable.h"
 #include <d3d11.h>
 #include <vector>
 #include<wrl.h>
 class Graphics {
+    friend class Bindable;
 public:
     class Exception : public ChiliException {
         using ChiliException::ChiliException;
