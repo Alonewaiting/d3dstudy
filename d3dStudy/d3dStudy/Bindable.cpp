@@ -8,7 +8,10 @@ ID3D11Device* Bindable::GetDevice(Graphics& gfx) noexcept {
     return gfx.pDevice.Get();
 }
 
-DxgiInfoManager& Bindable::GetInfoManager(Graphics& gfx) noexcept {
-    // TODO: 在此处插入 return 语句
+DxgiInfoManager& Bindable::GetInfoManager(Graphics& gfx) noexcept(!IS_DEBUG) {
+#ifndef NDEBUG
     return gfx.infoManager;
+#else
+    throw std::logic_error("YouFuckedUp! (tried to access gfx.infoManager in Release config)");
+#endif
 }
