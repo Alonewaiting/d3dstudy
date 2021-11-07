@@ -115,6 +115,10 @@ void Graphics::ClearBuffer(float red, float green, float blue) noexcept {
     }
 }
 
+void Graphics::DrawIndexed(UINT count) noexcept {
+    GFX_THROW_INFO_ONLY(pContext->DrawIndexed(count, 0u, 0u));
+}
+
 void Graphics::DrawTestTriangle( float angle, float x, float y, float z) {
     HRESULT hr;
 
@@ -304,6 +308,14 @@ void Graphics::DrawTestTriangle( float angle, float x, float y, float z) {
 
 
     
+}
+
+void Graphics::SetProjection(DirectX::FXMMATRIX proj) noexcept {
+    projection = proj;
+}
+
+DirectX::XMMATRIX Graphics::GetProjection() const noexcept {
+    return projection;
 }
 
 // Graphics exception stuff
