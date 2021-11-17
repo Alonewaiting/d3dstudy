@@ -4,7 +4,7 @@ IndexBuffer::IndexBuffer(Graphics& gfx, const std::vector<unsigned short>& indic
     INFOMAN(gfx);   
     
     D3D11_BUFFER_DESC ibd = {0 };
-    ibd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
     ibd.Usage = D3D11_USAGE_DEFAULT;
     ibd.CPUAccessFlags = 0U;
     ibd.MiscFlags = 0;

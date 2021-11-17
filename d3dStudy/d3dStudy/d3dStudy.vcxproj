@@ -175,6 +175,7 @@
     <ClInclude Include="ChiliWin.h" />
     <ClInclude Include="ConstantBuffers.hpp" />
     <ClInclude Include="Drawable.h" />
+    <ClInclude Include="DrawableBase.h" />
     <ClInclude Include="dxerror.h" />
     <ClInclude Include="DxgiInfoManager.h" />
     <ClInclude Include="Graphics.h" />
