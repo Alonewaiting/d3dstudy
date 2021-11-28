@@ -6,13 +6,15 @@
 
 void Drawable::Draw( Graphics& gfx ) const noexcept
 {
-	for( auto& b : binds )
-	{
-		b->Bind( gfx );
+
+	for (auto& b : binds) {
+		b->Bind(gfx);
 	}
 	for (auto& b : GetStaticBinds()) {
 		b->Bind(gfx);
 	}
+	 
+	
 	gfx.DrawIndexed( pIndexBuffer->GetCount() );
 }
 
